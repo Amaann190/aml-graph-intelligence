@@ -1,0 +1,10 @@
+{
+  "transactions": 5078345,
+  "labelled_positive": 5177,
+  "flagged": 568058,
+  "true_positive": 952,
+  "false_positive": 567106,
+  "false_negative": 4225,
+  "precision": 0.0016758852089047245,
+  "recall": 0.18389028394823256
+}

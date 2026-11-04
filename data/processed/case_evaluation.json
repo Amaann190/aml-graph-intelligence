@@ -1,0 +1,11 @@
+{
+  "first_day": "2022/09/08",
+  "last_day": "2022/09/18",
+  "candidate_cases": 20012,
+  "labelled_cases": 1651,
+  "reviewed": 100,
+  "found": 33,
+  "precision_at_100": 0.33,
+  "recall_at_100": 0.019987886129618413,
+  "candidate_recall": 0.07995154451847365
+}

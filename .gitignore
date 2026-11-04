@@ -218,3 +218,12 @@ __marimo__/
 
 # Streamlit
 .streamlit/secrets.toml
+
+data/raw/
+data/processed/
+
+# Publish compact evaluation results. The full alert and case exports are generated locally.
+!data/processed/
+data/processed/*
+!data/processed/evaluation.json
+!data/processed/case_evaluation.json
