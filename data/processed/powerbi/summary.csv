@@ -1,0 +1,2 @@
+transactions,labelled,base_rate,patterns,graph_flagged,graph_precision,graph_recall,graph_lift,daily_flagged,daily_precision,daily_recall,queue_p100_graph,queue_p100_daily
+5078345,5177,0.0010194266045335635,324,1705,0.4228739002932551,0.13926984740197026,414.8154446947558,568058,0.0016758852089047245,0.18389028394823256,0.57,0.37

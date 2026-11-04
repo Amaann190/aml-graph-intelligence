@@ -228,3 +228,15 @@ data/processed/*
 !data/processed/evaluation.json
 !data/processed/case_evaluation.json
 !data/processed/patterns.csv
+!data/processed/powerbi/
+!data/processed/powerbi/*.csv
+
+# Power BI user-specific cache
+**/.pbi/cache.abf
+**/.pbi/localSettings.json
+**/.pbi/unappliedChanges.json
+
+# Intermediate Desktop Save As project
+/powerbi/AML_Review.pbix.Report/
+/powerbi/AML_Review.pbix.SemanticModel/
+/powerbi/AML_Review.pbix.pbip

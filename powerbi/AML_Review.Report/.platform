@@ -1,0 +1,11 @@
+{
+  "$schema": "https://developer.microsoft.com/json-schemas/fabric/gitIntegration/platformProperties/2.0.0/schema.json",
+  "metadata": {
+    "type": "Report",
+    "displayName": "AML_Review"
+  },
+  "config": {
+    "version": "2.0",
+    "logicalId": "ad91256f-be8d-4fe1-9dbb-a136ecd0d547"
+  }
+}

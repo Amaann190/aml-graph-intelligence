@@ -1,0 +1,189 @@
+{
+  "$schema": "https://developer.microsoft.com/json-schemas/fabric/item/report/definition/visualContainer/2.1.0/schema.json",
+  "name": "tablePatterns",
+  "position": {
+    "x": 12,
+    "y": 376,
+    "width": 1256,
+    "height": 352,
+    "z": 6,
+    "tabOrder": 6
+  },
+  "visual": {
+    "visualType": "tableEx",
+    "query": {
+      "queryState": {
+        "Values": {
+          "projections": [
+            {
+              "field": {
+                "Column": {
+                  "Expression": {
+                    "SourceRef": {
+                      "Entity": "Patterns"
+                    }
+                  },
+                  "Property": "Pattern ID"
+                }
+              },
+              "queryRef": "Patterns.Pattern ID",
+              "nativeQueryRef": "Pattern ID"
+            },
+            {
+              "field": {
+                "Column": {
+                  "Expression": {
+                    "SourceRef": {
+                      "Entity": "Patterns"
+                    }
+                  },
+                  "Property": "Pattern type"
+                }
+              },
+              "queryRef": "Patterns.Pattern type",
+              "nativeQueryRef": "Pattern type"
+            },
+            {
+              "field": {
+                "Column": {
+                  "Expression": {
+                    "SourceRef": {
+                      "Entity": "Patterns"
+                    }
+                  },
+                  "Property": "Accounts in pattern"
+                }
+              },
+              "queryRef": "Patterns.Accounts in pattern",
+              "nativeQueryRef": "Accounts in pattern"
+            },
+            {
+              "field": {
+                "Column": {
+                  "Expression": {
+                    "SourceRef": {
+                      "Entity": "Patterns"
+                    }
+                  },
+                  "Property": "Start"
+                }
+              },
+              "queryRef": "Patterns.Start",
+              "nativeQueryRef": "Start"
+            },
+            {
+              "field": {
+                "Column": {
+                  "Expression": {
+                    "SourceRef": {
+                      "Entity": "Patterns"
+                    }
+                  },
+                  "Property": "Hours"
+                }
+              },
+              "queryRef": "Patterns.Hours",
+              "nativeQueryRef": "Hours"
+            },
+            {
+              "field": {
+                "Column": {
+                  "Expression": {
+                    "SourceRef": {
+                      "Entity": "Patterns"
+                    }
+                  },
+                  "Property": "Transfers"
+                }
+              },
+              "queryRef": "Patterns.Transfers",
+              "nativeQueryRef": "Transfers"
+            },
+            {
+              "field": {
+                "Column": {
+                  "Expression": {
+                    "SourceRef": {
+                      "Entity": "Patterns"
+                    }
+                  },
+                  "Property": "Labelled transfers"
+                }
+              },
+              "queryRef": "Patterns.Labelled transfers",
+              "nativeQueryRef": "Labelled transfers"
+            },
+            {
+              "field": {
+                "Column": {
+                  "Expression": {
+                    "SourceRef": {
+                      "Entity": "Patterns"
+                    }
+                  },
+                  "Property": "Labelled share"
+                }
+              },
+              "queryRef": "Patterns.Labelled share",
+              "nativeQueryRef": "Labelled share"
+            },
+            {
+              "field": {
+                "Column": {
+                  "Expression": {
+                    "SourceRef": {
+                      "Entity": "Patterns"
+                    }
+                  },
+                  "Property": "Entities"
+                }
+              },
+              "queryRef": "Patterns.Entities",
+              "nativeQueryRef": "Entities"
+            }
+          ]
+        }
+      },
+      "sortDefinition": {
+        "sort": [
+          {
+            "field": {
+              "Column": {
+                "Expression": {
+                  "SourceRef": {
+                    "Entity": "Patterns"
+                  }
+                },
+                "Property": "Labelled share"
+              }
+            },
+            "direction": "Descending"
+          }
+        ]
+      }
+    },
+    "drillFilterOtherVisuals": true,
+    "visualContainerObjects": {
+      "title": [
+        {
+          "properties": {
+            "show": {
+              "expr": {
+                "Literal": {
+                  "Value": "true"
+                }
+              }
+            },
+            "text": {
+              "expr": {
+                "Literal": {
+                  "Value": "'Every cycle and scatter-gather, largest labelled share first'"
+                }
+              }
+            }
+          }
+        }
+      ]
+    }
+  }
+}

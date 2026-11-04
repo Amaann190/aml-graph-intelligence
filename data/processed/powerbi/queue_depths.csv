@@ -1,0 +1,13 @@
+ranking,depth,precision,found
+Graph patterns first,25,0.84,21
+Graph patterns first,50,0.64,32
+Graph patterns first,100,0.57,57
+Graph patterns first,250,0.676,169
+Graph patterns first,500,0.416,208
+Graph patterns first,1000,0.344,344
+Daily rules only,25,0.6,15
+Daily rules only,50,0.3,15
+Daily rules only,100,0.37,37
+Daily rules only,250,0.468,117
+Daily rules only,500,0.236,118
+Daily rules only,1000,0.124,124

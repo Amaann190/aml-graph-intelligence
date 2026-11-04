@@ -1,0 +1,823 @@
+{
+  "compatibilityLevel": 1606,
+  "model": {
+    "annotations": [
+      {
+        "name": "__PBI_TimeIntelligenceEnabled",
+        "value": "0"
+      },
+      {
+        "name": "PBI_QueryOrder",
+        "value": "[\"Summary\", \"Signals\", \"Periods\", \"Days\", \"QueueDepths\", \"ReviewQueue\", \"Patterns\", \"DataFolder\"]"
+      },
+      {
+        "name": "PBI_ProTooling",
+        "value": "[\"DevMode\"]"
+      }
+    ],
+    "culture": "en-US",
+    "dataAccessOptions": {
+      "legacyRedirects": true,
+      "returnErrorValuesAsNull": true
+    },
+    "defaultPowerBIDataSourceVersion": "powerBI_V3",
+    "expressions": [
+      {
+        "name": "DataFolder",
+        "annotations": [
+          {
+            "name": "PBI_ResultType",
+            "value": "Text"
+          }
+        ],
+        "expression": "\"C:\\\\Users\\\\Amaan\\\\Desktop\\\\Fintech-Portfolio\\\\aml-graph-intelligence\\\\data\\\\processed\" meta [IsParameterQuery=true, Type=\"Text\", IsParameterQueryRequired=true]",
+        "kind": "m",
+        "lineageTag": "e8b60cad-a3d8-4826-80e3-543c3a09232c"
+      }
+    ],
+    "sourceQueryCulture": "en-US",
+    "tables": [
+      {
+        "name": "Summary",
+        "columns": [
+          {
+            "name": "Transactions",
+            "dataType": "int64",
+            "formatString": "#,0",
+            "lineageTag": "33192eac-5dd6-4724-8894-19668acfcbae",
+            "sourceColumn": "transactions",
+            "summarizeBy": "none"
+          },
+          {
+            "name": "Labelled",
+            "dataType": "int64",
+            "formatString": "#,0",
+            "lineageTag": "c6c79797-350f-42fe-8c3d-65b26904801e",
+            "sourceColumn": "labelled",
+            "summarizeBy": "none"
+          },
+          {
+            "name": "Base rate",
+            "dataType": "double",
+            "formatString": "0.00%",
+            "lineageTag": "67a868fc-b0e7-4356-a940-c1714cd5da4f",
+            "sourceColumn": "base_rate",
+            "summarizeBy": "none"
+          },
+          {
+            "name": "Pattern count",
+            "dataType": "int64",
+            "formatString": "#,0",
+            "lineageTag": "ca69f0ba-165d-45eb-918d-9f649cd9b99d",
+            "sourceColumn": "patterns",
+            "summarizeBy": "none"
+          },
+          {
+            "name": "Graph flagged",
+            "dataType": "int64",
+            "formatString": "#,0",
+            "lineageTag": "1c09be0c-3ca0-4005-8236-288c95df9fa8",
+            "sourceColumn": "graph_flagged",
+            "summarizeBy": "none"
+          },
+          {
+            "name": "Graph precision",
+            "dataType": "double",
+            "formatString": "0.0%",
+            "lineageTag": "0e3eafa3-5e4f-4717-b08f-e6eec4077282",
+            "sourceColumn": "graph_precision",
+            "summarizeBy": "none"
+          },
+          {
+            "name": "Graph recall",
+            "dataType": "double",
+            "formatString": "0.0%",
+            "lineageTag": "d53b703c-38c0-440e-994b-fa9dbed295d1",
+            "sourceColumn": "graph_recall",
+            "summarizeBy": "none"
+          },
+          {
+            "name": "Graph lift",
+            "dataType": "double",
+            "formatString": "#,0",
+            "lineageTag": "78da1bfa-2e70-46be-8be0-a51fc9529197",
+            "sourceColumn": "graph_lift",
+            "summarizeBy": "none"
+          },
+          {
+            "name": "Daily flagged",
+            "dataType": "int64",
+            "formatString": "#,0",
+            "lineageTag": "76722e57-39ee-46bd-897d-733a1e26460c",
+            "sourceColumn": "daily_flagged",
+            "summarizeBy": "none"
+          },
+          {
+            "name": "Daily precision",
+            "dataType": "double",
+            "formatString": "0.00%",
+            "lineageTag": "91415aa6-a6b0-47f9-9779-17b1758ca349",
+            "sourceColumn": "daily_precision",
+            "summarizeBy": "none"
+          },
+          {
+            "name": "Daily recall",
+            "dataType": "double",
+            "formatString": "0.0%",
+            "lineageTag": "a7782301-00f9-4cfc-8a5d-6cb6e5be6351",
+            "sourceColumn": "daily_recall",
+            "summarizeBy": "none"
+          },
+          {
+            "name": "Top-100 graph",
+            "dataType": "double",
+            "formatString": "0%",
+            "lineageTag": "be03f64c-21af-434f-8eee-11be493f12e8",
+            "sourceColumn": "queue_p100_graph",
+            "summarizeBy": "none"
+          },
+          {
+            "name": "Top-100 daily",
+            "dataType": "double",
+            "formatString": "0%",
+            "lineageTag": "085472ee-c05c-4f62-a4ef-29cadf387ab2",
+            "sourceColumn": "queue_p100_daily",
+            "summarizeBy": "none"
+          }
+        ],
+        "lineageTag": "983c9256-d786-424c-96f6-b87fdfccdb35",
+        "measures": [
+          {
+            "name": "Transfers analysed",
+            "expression": "SUM(Summary[Transactions])",
+            "formatString": "#,0",
+            "lineageTag": "0b0d0686-a444-430d-916d-47ea9402694c"
+          },
+          {
+            "name": "Laundering base rate",
+            "description": "Share of all transfers carrying the synthetic laundering label.",
+            "expression": "MAX(Summary[Base rate])",
+            "formatString": "0.00%",
+            "lineageTag": "50e42129-2ab0-4ee0-a820-bff0020d2011"
+          },
+          {
+            "name": "Graph pattern precision",
+            "description": "Share of graph-pattern transfers that are labelled laundering.",
+            "expression": "MAX(Summary[Graph precision])",
+            "formatString": "0.0%",
+            "lineageTag": "ba916900-c4cb-43ae-bf35-da570efc4815"
+          },
+          {
+            "name": "Daily rule precision",
+            "expression": "MAX(Summary[Daily precision])",
+            "formatString": "0.00%",
+            "lineageTag": "7482d1ca-5205-4b6f-9e1d-61af65df016c"
+          },
+          {
+            "name": "Graph lift over base rate",
+            "expression": "MAX(Summary[Graph lift])",
+            "formatString": "#,0\"x\"",
+            "lineageTag": "371e9dd8-77ba-4bba-9ae7-e1ecd179d3eb"
+          },
+          {
+            "name": "Detected patterns",
+            "expression": "MAX(Summary[Pattern count])",
+            "formatString": "#,0",
+            "lineageTag": "1ed11a7d-25d5-4c21-99f6-63c514d77276"
+          },
+          {
+            "name": "Top-100 precision, graph first",
+            "expression": "MAX(Summary[Top-100 graph])",
+            "formatString": "0%",
+            "lineageTag": "e7bca835-1959-416a-b9b7-11651a9365df"
+          },
+          {
+            "name": "Top-100 precision, daily rules",
+            "expression": "MAX(Summary[Top-100 daily])",
+            "formatString": "0%",
+            "lineageTag": "def3042a-3e99-4ded-bdb2-5c815399327c"
+          }
+        ],
+        "partitions": [
+          {
+            "name": "Summary",
+            "mode": "import",
+            "source": {
+              "expression": [
+                "let",
+                "    Source = Csv.Document(File.Contents(DataFolder & \"/powerbi/summary.csv\"), [Delimiter=\",\", Encoding=65001, QuoteStyle=QuoteStyle.Csv]),",
+                "    Headers = Table.PromoteHeaders(Source, [PromoteAllScalars=true]),",
+                "    Typed = Table.TransformColumnTypes(Headers, {{\"transactions\", Int64.Type}, {\"labelled\", Int64.Type}, {\"base_rate\", type number}, {\"patterns\", Int64.Type}, {\"graph_flagged\", Int64.Type}, {\"graph_precision\", type number}, {\"graph_recall\", type number}, {\"graph_lift\", type number}, {\"daily_flagged\", Int64.Type}, {\"daily_precision\", type number}, {\"daily_recall\", type number}, {\"queue_p100_graph\", type number}, {\"queue_p100_daily\", type number}}, \"en-US\")",
+                "in",
+                "    Typed"
+              ],
+              "type": "m"
+            }
+          }
+        ]
+      },
+      {
+        "name": "Signals",
+        "columns": [
+          {
+            "name": "Order",
+            "dataType": "int64",
+            "lineageTag": "475411eb-d570-4a19-9864-b5dcfe7f3b29",
+            "sourceColumn": "order",
+            "summarizeBy": "none"
+          },
+          {
+            "name": "Signal",
+            "dataType": "string",
+            "lineageTag": "790cac9e-be63-4c3e-9d7d-3bc367e4a320",
+            "sortByColumn": "Order",
+            "sourceColumn": "signal",
+            "summarizeBy": "none"
+          },
+          {
+            "name": "Kind",
+            "dataType": "string",
+            "lineageTag": "0bb5b6c0-f3cc-4fbc-bcbd-17df1f2da0a3",
+            "sourceColumn": "family",
+            "summarizeBy": "none"
+          },
+          {
+            "name": "Flagged",
+            "dataType": "int64",
+            "formatString": "#,0",
+            "lineageTag": "fa963c18-17ac-459e-a800-9647a3b9e9ef",
+            "sourceColumn": "flagged",
+            "summarizeBy": "sum"
+          },
+          {
+            "name": "Labelled",
+            "dataType": "int64",
+            "formatString": "#,0",
+            "lineageTag": "5f7d707f-58ab-454d-97f4-7b1217619681",
+            "sourceColumn": "true_positive",
+            "summarizeBy": "sum"
+          },
+          {
+            "name": "Precision",
+            "dataType": "double",
+            "formatString": "0.00%",
+            "lineageTag": "e72ceb1c-dfdd-441f-a6dd-ce598093f649",
+            "sourceColumn": "precision",
+            "summarizeBy": "none"
+          },
+          {
+            "name": "Recall",
+            "dataType": "double",
+            "formatString": "0.0%",
+            "lineageTag": "6ee83a60-45c4-4b98-b2ea-bf46fbb6dd60",
+            "sourceColumn": "recall",
+            "summarizeBy": "none"
+          },
+          {
+            "name": "Lift",
+            "dataType": "double",
+            "formatString": "#,0.0",
+            "lineageTag": "3e9fa852-ed8b-48e1-9815-66125e4fbbb1",
+            "sourceColumn": "lift",
+            "summarizeBy": "none"
+          }
+        ],
+        "lineageTag": "a47ea3a2-9151-405b-9720-df702d3ef1a0",
+        "measures": [
+          {
+            "name": "Signal precision",
+            "description": "Precision of each individual signal; combined rows are left out.",
+            "expression": "CALCULATE(MAX(Signals[Precision]), KEEPFILTERS(Signals[Kind] <> \"Combined\"))",
+            "formatString": "0.0%",
+            "lineageTag": "b592d5d1-3839-495f-95a0-c809ca44898d"
+          }
+        ],
+        "partitions": [
+          {
+            "name": "Signals",
+            "mode": "import",
+            "source": {
+              "expression": [
+                "let",
+                "    Source = Csv.Document(File.Contents(DataFolder & \"/powerbi/signals.csv\"), [Delimiter=\",\", Encoding=65001, QuoteStyle=QuoteStyle.Csv]),",
+                "    Headers = Table.PromoteHeaders(Source, [PromoteAllScalars=true]),",
+                "    Typed = Table.TransformColumnTypes(Headers, {{\"order\", Int64.Type}, {\"signal\", type text}, {\"family\", type text}, {\"flagged\", Int64.Type}, {\"true_positive\", Int64.Type}, {\"precision\", type number}, {\"recall\", type number}, {\"lift\", type number}}, \"en-US\")",
+                "in",
+                "    Typed"
+              ],
+              "type": "m"
+            }
+          }
+        ]
+      },
+      {
+        "name": "Periods",
+        "columns": [
+          {
+            "name": "Order",
+            "dataType": "int64",
+            "lineageTag": "009fdf4f-404b-41e7-a8f2-74c8b7988b27",
+            "sourceColumn": "order",
+            "summarizeBy": "none"
+          },
+          {
+            "name": "Period",
+            "dataType": "string",
+            "lineageTag": "70a0534f-eb79-4ffa-9597-50bf80c6dfac",
+            "sortByColumn": "Order",
+            "sourceColumn": "period",
+            "summarizeBy": "none"
+          },
+          {
+            "name": "Signal group",
+            "dataType": "string",
+            "lineageTag": "6b5d1608-3ee6-490d-980c-fcc1faa64bc5",
+            "sourceColumn": "group",
+            "summarizeBy": "none"
+          },
+          {
+            "name": "Transactions",
+            "dataType": "int64",
+            "formatString": "#,0",
+            "lineageTag": "33946cf8-df9a-4bc0-9cdf-53097b3476a5",
+            "sourceColumn": "transactions",
+            "summarizeBy": "none"
+          },
+          {
+            "name": "Labelled",
+            "dataType": "int64",
+            "formatString": "#,0",
+            "lineageTag": "a937bc09-b063-4848-a014-d601736e1e6d",
+            "sourceColumn": "labelled",
+            "summarizeBy": "none"
+          },
+          {
+            "name": "Flagged",
+            "dataType": "int64",
+            "formatString": "#,0",
+            "lineageTag": "e4da4bf0-edc6-42ce-a5b9-6716cfa5c7dd",
+            "sourceColumn": "flagged",
+            "summarizeBy": "sum"
+          },
+          {
+            "name": "Precision",
+            "dataType": "double",
+            "formatString": "0.0%",
+            "lineageTag": "17452716-bace-440c-844c-2f08cba5a227",
+            "sourceColumn": "precision",
+            "summarizeBy": "none"
+          },
+          {
+            "name": "Recall",
+            "dataType": "double",
+            "formatString": "0.0%",
+            "lineageTag": "d7b30693-6b89-40c7-8c5c-01acbb9241ec",
+            "sourceColumn": "recall",
+            "summarizeBy": "none"
+          }
+        ],
+        "lineageTag": "40e4dc84-cdf6-429f-a85e-0eb28a4125b7",
+        "measures": [
+          {
+            "name": "Period precision",
+            "expression": "MAX(Periods[Precision])",
+            "formatString": "0.0%",
+            "lineageTag": "62df672c-b04b-4e02-a8ce-60b92ee7ffed"
+          },
+          {
+            "name": "Period recall",
+            "expression": "MAX(Periods[Recall])",
+            "formatString": "0.0%",
+            "lineageTag": "a6009722-02b2-4b80-894d-5806fb6f29fd"
+          }
+        ],
+        "partitions": [
+          {
+            "name": "Periods",
+            "mode": "import",
+            "source": {
+              "expression": [
+                "let",
+                "    Source = Csv.Document(File.Contents(DataFolder & \"/powerbi/periods.csv\"), [Delimiter=\",\", Encoding=65001, QuoteStyle=QuoteStyle.Csv]),",
+                "    Headers = Table.PromoteHeaders(Source, [PromoteAllScalars=true]),",
+                "    Typed = Table.TransformColumnTypes(Headers, {{\"order\", Int64.Type}, {\"period\", type text}, {\"group\", type text}, {\"transactions\", Int64.Type}, {\"labelled\", Int64.Type}, {\"flagged\", Int64.Type}, {\"precision\", type number}, {\"recall\", type number}}, \"en-US\")",
+                "in",
+                "    Typed"
+              ],
+              "type": "m"
+            }
+          }
+        ]
+      },
+      {
+        "name": "Days",
+        "columns": [
+          {
+            "name": "Day",
+            "annotations": [
+              {
+                "name": "UnderlyingDateTimeDataType",
+                "value": "Date"
+              }
+            ],
+            "dataType": "dateTime",
+            "formatString": "dd mmm",
+            "lineageTag": "1d4ba51b-525d-4f5f-985f-43cc36a283ad",
+            "sourceColumn": "day",
+            "summarizeBy": "none"
+          },
+          {
+            "name": "Transfers",
+            "dataType": "int64",
+            "formatString": "#,0",
+            "lineageTag": "9f5ffcfc-0e46-4d99-b039-cb5693a4a228",
+            "sourceColumn": "transfers",
+            "summarizeBy": "sum"
+          },
+          {
+            "name": "Labelled",
+            "dataType": "int64",
+            "formatString": "#,0",
+            "lineageTag": "e0020796-a115-4d96-973e-547971bf19e7",
+            "sourceColumn": "labelled",
+            "summarizeBy": "sum"
+          },
+          {
+            "name": "Labelled share",
+            "dataType": "double",
+            "formatString": "0.0%",
+            "lineageTag": "8949793b-3e5c-4276-babf-9e97e741d52b",
+            "sourceColumn": "labelled_share",
+            "summarizeBy": "none"
+          }
+        ],
+        "lineageTag": "c3484778-ddbc-4766-a9c3-141b2cbaa87f",
+        "measures": [
+          {
+            "name": "Daily labelled share",
+            "expression": "DIVIDE(SUM(Days[Labelled]), SUM(Days[Transfers]))",
+            "formatString": "0.0%",
+            "lineageTag": "510656f4-98f8-4e62-a2da-50b40ed27174"
+          }
+        ],
+        "partitions": [
+          {
+            "name": "Days",
+            "mode": "import",
+            "source": {
+              "expression": [
+                "let",
+                "    Source = Csv.Document(File.Contents(DataFolder & \"/powerbi/days.csv\"), [Delimiter=\",\", Encoding=65001, QuoteStyle=QuoteStyle.Csv]),",
+                "    Headers = Table.PromoteHeaders(Source, [PromoteAllScalars=true]),",
+                "    Typed = Table.TransformColumnTypes(Headers, {{\"day\", type date}, {\"transfers\", Int64.Type}, {\"labelled\", Int64.Type}, {\"labelled_share\", type number}}, \"en-US\")",
+                "in",
+                "    Typed"
+              ],
+              "type": "m"
+            }
+          }
+        ]
+      },
+      {
+        "name": "QueueDepths",
+        "columns": [
+          {
+            "name": "Ranking",
+            "dataType": "string",
+            "lineageTag": "be04a95b-3531-4234-8034-bca974adaa31",
+            "sourceColumn": "ranking",
+            "summarizeBy": "none"
+          },
+          {
+            "name": "Depth",
+            "dataType": "int64",
+            "formatString": "#,0",
+            "lineageTag": "83c61390-c706-4cff-aedc-3eee8c4ee3c6",
+            "sourceColumn": "depth",
+            "summarizeBy": "none"
+          },
+          {
+            "name": "Precision",
+            "dataType": "double",
+            "formatString": "0%",
+            "lineageTag": "7745b9e0-fae9-48aa-95ab-0417283dd278",
+            "sourceColumn": "precision",
+            "summarizeBy": "none"
+          },
+          {
+            "name": "Found",
+            "dataType": "int64",
+            "formatString": "#,0",
+            "lineageTag": "99dda4f7-11e4-466a-b8e8-67eaf39ebbd1",
+            "sourceColumn": "found",
+            "summarizeBy": "sum"
+          },
+          {
+            "name": "Cases reviewed",
+            "dataType": "string",
+            "lineageTag": "f052a856-703e-4248-b0a7-981c1d18b37a",
+            "sortByColumn": "Depth",
+            "sourceColumn": "depth_label",
+            "summarizeBy": "none"
+          }
+        ],
+        "lineageTag": "f95bd49b-59a1-42cf-87dc-d9c577f909ed",
+        "measures": [
+          {
+            "name": "Queue precision",
+            "expression": "MAX(QueueDepths[Precision])",
+            "formatString": "0%",
+            "lineageTag": "4a1de9fd-670b-48f9-b79a-7346cc292747"
+          }
+        ],
+        "partitions": [
+          {
+            "name": "QueueDepths",
+            "mode": "import",
+            "source": {
+              "expression": [
+                "let",
+                "    Source = Csv.Document(File.Contents(DataFolder & \"/powerbi/queue_depths.csv\"), [Delimiter=\",\", Encoding=65001, QuoteStyle=QuoteStyle.Csv]),",
+                "    Headers = Table.PromoteHeaders(Source, [PromoteAllScalars=true]),",
+                "    Typed = Table.TransformColumnTypes(Headers, {{\"ranking\", type text}, {\"depth\", Int64.Type}, {\"precision\", type number}, {\"found\", Int64.Type}}, \"en-US\"),",
+                "    Result = Table.AddColumn(Typed, \"depth_label\", each \"Top \" & Text.From([depth]), type text)",
+                "in",
+                "    Result"
+              ],
+              "type": "m"
+            }
+          }
+        ]
+      },
+      {
+        "name": "ReviewQueue",
+        "columns": [
+          {
+            "name": "Rank",
+            "dataType": "int64",
+            "formatString": "#,0",
+            "lineageTag": "0dbb9d9f-d750-4e6b-ab78-219726440467",
+            "sourceColumn": "rank",
+            "summarizeBy": "none"
+          },
+          {
+            "name": "Day",
+            "annotations": [
+              {
+                "name": "UnderlyingDateTimeDataType",
+                "value": "Date"
+              }
+            ],
+            "dataType": "dateTime",
+            "formatString": "dd mmm yyyy",
+            "lineageTag": "3db02796-fb67-4027-9e39-4188ad2957f8",
+            "sourceColumn": "day",
+            "summarizeBy": "none"
+          },
+          {
+            "name": "Payer",
+            "dataType": "string",
+            "lineageTag": "56df22d5-3d79-4c2f-9b3e-8ed1934d3ebf",
+            "sourceColumn": "payer",
+            "summarizeBy": "none"
+          },
+          {
+            "name": "Graph patterns",
+            "dataType": "int64",
+            "formatString": "#,0",
+            "lineageTag": "39136f3a-9c57-4b80-a1dc-eb7af8ed6aa8",
+            "sourceColumn": "graph_patterns",
+            "summarizeBy": "sum"
+          },
+          {
+            "name": "Pattern transfers",
+            "dataType": "int64",
+            "formatString": "#,0",
+            "lineageTag": "0719a66d-51c3-41ec-a713-aebbca015c94",
+            "sourceColumn": "graph_transfers",
+            "summarizeBy": "sum"
+          },
+          {
+            "name": "Flagged transfers",
+            "dataType": "int64",
+            "formatString": "#,0",
+            "lineageTag": "e609be8e-01b3-483c-b80b-665ccc022132",
+            "sourceColumn": "transfers",
+            "summarizeBy": "sum"
+          },
+          {
+            "name": "Daily rule hits",
+            "dataType": "int64",
+            "formatString": "#,0",
+            "lineageTag": "43866857-c300-4ebb-b828-19519d46e15e",
+            "sourceColumn": "daily_hits",
+            "summarizeBy": "sum"
+          },
+          {
+            "name": "Most signals on one transfer",
+            "dataType": "int64",
+            "formatString": "#,0",
+            "lineageTag": "9e2a3069-13d8-4199-b179-60c97c93daf7",
+            "sourceColumn": "max_overlap",
+            "summarizeBy": "none"
+          },
+          {
+            "name": "Example source row",
+            "dataType": "int64",
+            "formatString": "0",
+            "lineageTag": "27d3320c-ba3a-4d41-b61c-caf25c8d3eef",
+            "sourceColumn": "example_row",
+            "summarizeBy": "none"
+          },
+          {
+            "name": "Synthetic label",
+            "dataType": "string",
+            "lineageTag": "69647014-1628-49c2-abc5-44ca85def402",
+            "sourceColumn": "labelled_case",
+            "summarizeBy": "none"
+          }
+        ],
+        "lineageTag": "f8368726-f8a0-4c49-921f-676c4571ed31",
+        "measures": [
+          {
+            "name": "Cases",
+            "expression": "COUNTROWS(ReviewQueue)",
+            "formatString": "#,0",
+            "lineageTag": "138b46b6-743c-4678-a1eb-9fbe9dc05daa"
+          },
+          {
+            "name": "Labelled cases",
+            "expression": "CALCULATE(COUNTROWS(ReviewQueue), ReviewQueue[Synthetic label] = \"Labelled\")",
+            "formatString": "#,0",
+            "lineageTag": "e5345269-2881-4f98-b515-f0e6ecd704ae"
+          }
+        ],
+        "partitions": [
+          {
+            "name": "ReviewQueue",
+            "mode": "import",
+            "source": {
+              "expression": [
+                "let",
+                "    Source = Csv.Document(File.Contents(DataFolder & \"/powerbi/review_queue.csv\"), [Delimiter=\",\", Encoding=65001, QuoteStyle=QuoteStyle.Csv]),",
+                "    Headers = Table.PromoteHeaders(Source, [PromoteAllScalars=true]),",
+                "    Typed = Table.TransformColumnTypes(Headers, {{\"rank\", Int64.Type}, {\"day\", type date}, {\"payer\", type text}, {\"graph_patterns\", Int64.Type}, {\"graph_transfers\", Int64.Type}, {\"transfers\", Int64.Type}, {\"daily_hits\", Int64.Type}, {\"max_overlap\", Int64.Type}, {\"example_row\", Int64.Type}, {\"labelled_case\", type text}}, \"en-US\")",
+                "in",
+                "    Typed"
+              ],
+              "type": "m"
+            }
+          }
+        ]
+      },
+      {
+        "name": "Patterns",
+        "columns": [
+          {
+            "name": "Pattern ID",
+            "dataType": "string",
+            "lineageTag": "a0f89cd8-3401-447f-9110-765863a7cde9",
+            "sourceColumn": "pattern_id",
+            "summarizeBy": "none"
+          },
+          {
+            "name": "Pattern type",
+            "dataType": "string",
+            "lineageTag": "c3f8449e-314e-4aa6-8fb9-36f7348972bd",
+            "sourceColumn": "kind",
+            "summarizeBy": "none"
+          },
+          {
+            "name": "Accounts",
+            "dataType": "string",
+            "lineageTag": "13d2b6a1-79f7-446e-b77a-301f3d9fb4a3",
+            "sourceColumn": "accounts",
+            "summarizeBy": "none"
+          },
+          {
+            "name": "Entities",
+            "dataType": "string",
+            "lineageTag": "8ab7c976-7202-4f39-9c0e-9fcec49bf585",
+            "sourceColumn": "entities",
+            "summarizeBy": "none"
+          },
+          {
+            "name": "Transfers",
+            "dataType": "int64",
+            "formatString": "#,0",
+            "lineageTag": "369c2ae0-246a-42bb-8e72-91f1cef3f982",
+            "sourceColumn": "transfers",
+            "summarizeBy": "sum"
+          },
+          {
+            "name": "Start",
+            "dataType": "dateTime",
+            "formatString": "dd mmm yyyy hh:nn",
+            "lineageTag": "0f7688a6-0deb-4b0d-b852-9e7be2ef1843",
+            "sourceColumn": "start",
+            "summarizeBy": "none"
+          },
+          {
+            "name": "End",
+            "dataType": "dateTime",
+            "formatString": "dd mmm yyyy hh:nn",
+            "lineageTag": "fd5df839-825e-44fa-8b46-49def1591215",
+            "sourceColumn": "end",
+            "summarizeBy": "none"
+          },
+          {
+            "name": "Hours",
+            "dataType": "double",
+            "formatString": "0.0",
+            "lineageTag": "0348486c-6407-4124-a761-e583067c754f",
+            "sourceColumn": "hours",
+            "summarizeBy": "none"
+          },
+          {
+            "name": "Labelled transfers",
+            "dataType": "int64",
+            "formatString": "#,0",
+            "lineageTag": "a3fd5f8f-f66f-4a61-936d-693217b02a3d",
+            "sourceColumn": "labelled_transfers",
+            "summarizeBy": "sum"
+          },
+          {
+            "name": "Accounts in pattern",
+            "dataType": "int64",
+            "formatString": "#,0",
+            "lineageTag": "5c00f2d4-e3d5-4f93-9adf-e2a90f4d1dc3",
+            "sourceColumn": "accounts_in_pattern",
+            "summarizeBy": "none"
+          },
+          {
+            "name": "Labelled share",
+            "dataType": "double",
+            "formatString": "0%",
+            "lineageTag": "d9d7e4d2-aeb2-4908-bcd0-eb2183a4ecb3",
+            "sourceColumn": "labelled_share",
+            "summarizeBy": "none"
+          },
+          {
+            "name": "Start day",
+            "annotations": [
+              {
+                "name": "UnderlyingDateTimeDataType",
+                "value": "Date"
+              }
+            ],
+            "dataType": "dateTime",
+            "formatString": "dd mmm",
+            "lineageTag": "9390d89b-36c7-4dba-a3f7-2e42c38d8616",
+            "sourceColumn": "start_day",
+            "summarizeBy": "none"
+          }
+        ],
+        "lineageTag": "a0686dcb-178a-4910-80fe-f226bde1fee7",
+        "measures": [
+          {
+            "name": "Pattern total",
+            "expression": "COUNTROWS(Patterns)",
+            "formatString": "#,0",
+            "lineageTag": "5bb6d526-8224-4497-a502-96c2f7a86f2a"
+          },
+          {
+            "name": "Transfers in patterns",
+            "expression": "SUM(Patterns[Transfers])",
+            "formatString": "#,0",
+            "lineageTag": "aefff98d-d145-4200-a169-d538f776b937"
+          },
+          {
+            "name": "Pattern labelled share",
+            "description": "Share of the selected patterns' transfers that carry the synthetic laundering label.",
+            "expression": "DIVIDE(SUM(Patterns[Labelled transfers]), SUM(Patterns[Transfers]))",
+            "formatString": "0.0%",
+            "lineageTag": "56e54c11-68ba-443f-b47b-0b293ccfca4b"
+          },
+          {
+            "name": "Patterns with no labelled transfer",
+            "expression": "CALCULATE(COUNTROWS(Patterns), Patterns[Labelled transfers] = 0)",
+            "formatString": "#,0",
+            "lineageTag": "339075e8-2157-4068-9f7f-24c77fe656c7"
+          }
+        ],
+        "partitions": [
+          {
+            "name": "Patterns",
+            "mode": "import",
+            "source": {
+              "expression": [
+                "let",
+                "    Source = Csv.Document(File.Contents(DataFolder & \"/powerbi/patterns.csv\"), [Delimiter=\",\", Encoding=65001, QuoteStyle=QuoteStyle.Csv]),",
+                "    Headers = Table.PromoteHeaders(Source, [PromoteAllScalars=true]),",
+                "    Typed = Table.TransformColumnTypes(Headers, {{\"pattern_id\", type text}, {\"kind\", type text}, {\"accounts\", type text}, {\"entities\", type text}, {\"transfers\", Int64.Type}, {\"start\", type datetime}, {\"end\", type datetime}, {\"hours\", type number}, {\"labelled_transfers\", Int64.Type}, {\"accounts_in_pattern\", Int64.Type}, {\"labelled_share\", type number}, {\"start_day\", type date}}, \"en-US\")",
+                "in",
+                "    Typed"
+              ],
+              "type": "m"
+            }
+          }
+        ]
+      }
+    ]
+  }
+}

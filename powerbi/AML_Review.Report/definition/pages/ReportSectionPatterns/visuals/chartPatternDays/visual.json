@@ -1,0 +1,114 @@
+{
+  "$schema": "https://developer.microsoft.com/json-schemas/fabric/item/report/definition/visualContainer/2.14.0/schema.json",
+  "name": "chartPatternDays",
+  "position": {
+    "x": 12,
+    "y": 134,
+    "z": 5,
+    "height": 230,
+    "width": 1256,
+    "tabOrder": 5
+  },
+  "visual": {
+    "visualType": "columnChart",
+    "query": {
+      "queryState": {
+        "Category": {
+          "projections": [
+            {
+              "field": {
+                "Column": {
+                  "Expression": {
+                    "SourceRef": {
+                      "Entity": "Patterns"
+                    }
+                  },
+                  "Property": "Start day"
+                }
+              },
+              "queryRef": "Patterns.Start day",
+              "nativeQueryRef": "Start day",
+              "active": true
+            }
+          ]
+        },
+        "Series": {
+          "projections": [
+            {
+              "field": {
+                "Column": {
+                  "Expression": {
+                    "SourceRef": {
+                      "Entity": "Patterns"
+                    }
+                  },
+                  "Property": "Pattern type"
+                }
+              },
+              "queryRef": "Patterns.Pattern type",
+              "nativeQueryRef": "Pattern type"
+            }
+          ]
+        },
+        "Y": {
+          "projections": [
+            {
+              "field": {
+                "Measure": {
+                  "Expression": {
+                    "SourceRef": {
+                      "Entity": "Patterns"
+                    }
+                  },
+                  "Property": "Pattern total"
+                }
+              },
+              "queryRef": "Patterns.Pattern total",
+              "nativeQueryRef": "Pattern total"
+            }
+          ]
+        }
+      },
+      "sortDefinition": {
+        "sort": [
+          {
+            "field": {
+              "Column": {
+                "Expression": {
+                  "SourceRef": {
+                    "Entity": "Patterns"
+                  }
+                },
+                "Property": "Start day"
+              }
+            },
+            "direction": "Ascending"
+          }
+        ]
+      }
+    },
+    "visualContainerObjects": {
+      "title": [
+        {
+          "properties": {
+            "show": {
+              "expr": {
+                "Literal": {
+                  "Value": "true"
+                }
+              }
+            },
+            "text": {
+              "expr": {
+                "Literal": {
+                  "Value": "'Detected patterns by the day they started'"
+                }
+              }
+            }
+          }
+        }
+      ]
+    },
+    "drillFilterOtherVisuals": true
+  }
+}

@@ -1,0 +1,189 @@
+{
+  "$schema": "https://developer.microsoft.com/json-schemas/fabric/item/report/definition/visualContainer/2.1.0/schema.json",
+  "name": "tableQueue",
+  "position": {
+    "x": 324,
+    "y": 256,
+    "width": 944,
+    "height": 472,
+    "z": 4,
+    "tabOrder": 4
+  },
+  "visual": {
+    "visualType": "tableEx",
+    "query": {
+      "queryState": {
+        "Values": {
+          "projections": [
+            {
+              "field": {
+                "Column": {
+                  "Expression": {
+                    "SourceRef": {
+                      "Entity": "ReviewQueue"
+                    }
+                  },
+                  "Property": "Rank"
+                }
+              },
+              "queryRef": "ReviewQueue.Rank",
+              "nativeQueryRef": "Rank"
+            },
+            {
+              "field": {
+                "Column": {
+                  "Expression": {
+                    "SourceRef": {
+                      "Entity": "ReviewQueue"
+                    }
+                  },
+                  "Property": "Day"
+                }
+              },
+              "queryRef": "ReviewQueue.Day",
+              "nativeQueryRef": "Day"
+            },
+            {
+              "field": {
+                "Column": {
+                  "Expression": {
+                    "SourceRef": {
+                      "Entity": "ReviewQueue"
+                    }
+                  },
+                  "Property": "Payer"
+                }
+              },
+              "queryRef": "ReviewQueue.Payer",
+              "nativeQueryRef": "Payer"
+            },
+            {
+              "field": {
+                "Column": {
+                  "Expression": {
+                    "SourceRef": {
+                      "Entity": "ReviewQueue"
+                    }
+                  },
+                  "Property": "Graph patterns"
+                }
+              },
+              "queryRef": "ReviewQueue.Graph patterns",
+              "nativeQueryRef": "Graph patterns"
+            },
+            {
+              "field": {
+                "Column": {
+                  "Expression": {
+                    "SourceRef": {
+                      "Entity": "ReviewQueue"
+                    }
+                  },
+                  "Property": "Pattern transfers"
+                }
+              },
+              "queryRef": "ReviewQueue.Pattern transfers",
+              "nativeQueryRef": "Pattern transfers"
+            },
+            {
+              "field": {
+                "Column": {
+                  "Expression": {
+                    "SourceRef": {
+                      "Entity": "ReviewQueue"
+                    }
+                  },
+                  "Property": "Flagged transfers"
+                }
+              },
+              "queryRef": "ReviewQueue.Flagged transfers",
+              "nativeQueryRef": "Flagged transfers"
+            },
+            {
+              "field": {
+                "Column": {
+                  "Expression": {
+                    "SourceRef": {
+                      "Entity": "ReviewQueue"
+                    }
+                  },
+                  "Property": "Daily rule hits"
+                }
+              },
+              "queryRef": "ReviewQueue.Daily rule hits",
+              "nativeQueryRef": "Daily rule hits"
+            },
+            {
+              "field": {
+                "Column": {
+                  "Expression": {
+                    "SourceRef": {
+                      "Entity": "ReviewQueue"
+                    }
+                  },
+                  "Property": "Example source row"
+                }
+              },
+              "queryRef": "ReviewQueue.Example source row",
+              "nativeQueryRef": "Example source row"
+            },
+            {
+              "field": {
+                "Column": {
+                  "Expression": {
+                    "SourceRef": {
+                      "Entity": "ReviewQueue"
+                    }
+                  },
+                  "Property": "Synthetic label"
+                }
+              },
+              "queryRef": "ReviewQueue.Synthetic label",
+              "nativeQueryRef": "Synthetic label"
+            }
+          ]
+        }
+      },
+      "sortDefinition": {
+        "sort": [
+          {
+            "field": {
+              "Column": {
+                "Expression": {
+                  "SourceRef": {
+                    "Entity": "ReviewQueue"
+                  }
+                },
+                "Property": "Rank"
+              }
+            },
+            "direction": "Ascending"
+          }
+        ]
+      }
+    },
+    "drillFilterOtherVisuals": true,
+    "visualContainerObjects": {
+      "title": [
+        {
+          "properties": {
+            "show": {
+              "expr": {
+                "Literal": {
+                  "Value": "true"
+                }
+              }
+            },
+            "text": {
+              "expr": {
+                "Literal": {
+                  "Value": "'Top 1,000 payer-day cases, ranked without labels'"
+                }
+              }
+            }
+          }
+        }
+      ]
+    }
+  }
+}

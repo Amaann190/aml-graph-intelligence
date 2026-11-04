@@ -5,6 +5,7 @@
 ![Python](https://img.shields.io/badge/Python-3.11%2B-3776AB?logo=python&logoColor=white)
 ![NetworkX](https://img.shields.io/badge/NetworkX-temporal%20cycles-2A78D6)
 ![pandas](https://img.shields.io/badge/pandas-5M%20transfers-150458?logo=pandas&logoColor=white)
+![Power BI](https://img.shields.io/badge/Power%20BI-3--page%20report-F2C811?logo=powerbi&logoColor=black)
 ![Tests](https://img.shields.io/badge/tests-31%20passed-2EA44F)
 
 ## The problem
@@ -18,7 +19,9 @@ This project asks two questions:
 
 It runs on the **IBM AMLworld HI-Small** synthetic dataset: 5,078,345 transfers between 515,088 accounts over 18 days, of which 5,177 (0.10%) are labelled laundering.
 
-![Precision of each signal against the base rate](docs/images/signal_precision.png)
+**[Download the Power BI report](powerbi/AML_Review.pbix)** (opens offline in Power BI Desktop) · [Dashboard pages](#power-bi-dashboard)
+
+![Power BI overview: signal precision against the base rate, by signal and by period](docs/images/powerbi-overview.png)
 
 ---
 
@@ -28,6 +31,7 @@ It runs on the **IBM AMLworld HI-Small** synthetic dataset: 5,078,345 transfers 
 - [How it works](#how-it-works)
 - [What a detected pattern looks like](#what-a-detected-pattern-looks-like)
 - [Worked investigation: one network, two views](#worked-investigation-one-network-two-views)
+- [Power BI dashboard](#power-bi-dashboard)
 - [How the results were checked](#how-the-results-were-checked)
 - [Run it](#run-it)
 - [Project structure](#project-structure)
@@ -36,6 +40,8 @@ It runs on the **IBM AMLworld HI-Small** synthetic dataset: 5,078,345 transfers 
 ---
 
 ## Headline results
+
+![Precision of each signal against the base rate](docs/images/signal_precision.png)
 
 **Transfer level.** Each signal is scored against the synthetic label. Lift is precision divided by the 0.10% base rate.
 
@@ -138,6 +144,24 @@ Entities: Partnership #16 > Corporation #14622 > Partnership #6126 > Partnership
 
 ---
 
+## Power BI dashboard
+
+[`powerbi/AML_Review.pbix`](powerbi/AML_Review.pbix) has three pages. It reads seven small tables in [`data/processed/powerbi/`](data/processed/powerbi/) (about 160 KB in total), so it opens and refreshes without the 476 MB raw file. Its source is also stored as a Power BI project ([`AML_Review.pbip`](powerbi/AML_Review.pbip)), so the model and every visual are readable JSON under version control.
+
+**1. Overview** *(screenshot at the top of this page)*. The headline cards (5,078,345 transfers, 0.10% base rate, 42.3% graph-pattern precision against 0.17% for the daily rules, 415× lift), precision for every signal, precision by period, and the daily labelled share that explains the Sep 11–18 tail.
+
+**2. Detected patterns.** All 324 cycles and scatter-gathers, filterable by pattern type and by number of accounts, with the day each pattern started. The table lists every pattern's accounts, entities, time span and how many of its transfers carry the label. Pattern IDs match `patterns.csv` and `python investigate.py P179`.
+
+![Power BI detected patterns page: 324 patterns by start day, with every pattern listed](docs/images/powerbi-patterns.png)
+
+**3. Review queue.** Precision at each queue depth for both rankings (57% against 37% at the top 100), and the top 1,000 payer-day cases in ranked order. Each case has an example source row to open with `investigate.py`. The synthetic-label filter is there for checking only; the ranking never uses it.
+
+![Power BI review queue page: queue precision by depth and the top-ranked cases](docs/images/powerbi-queue.png)
+
+**Refreshing on another computer.** Run `python export_powerbi.py` after `analyze.py` to rebuild the tables. In Power BI Desktop choose **Transform data → Edit parameters**, set **DataFolder** to the absolute path of this repository's `data/processed` folder, then select **Refresh**.
+
+---
+
 ## How the results were checked
 
 **Labels are only read after detection.** `aml/signals.py` never touches the label column, and a test confirms the output is the same whether the inputs are labelled 0 or 1. Labels enter only in `aml/evaluation.py`, to score what was already flagged.
@@ -197,6 +221,7 @@ python -m pip install -r requirements.txt
 python -m pytest -q          # 31 tests, no data needed
 python analyze.py            # about 2 minutes: signals, patterns, evaluation
 python make_charts.py        # README figures -> docs/images/
+python export_powerbi.py     # Power BI tables -> data/processed/powerbi/
 python investigate.py P179   # evidence for a pattern or a transfer
 ```
 
@@ -209,6 +234,7 @@ python investigate.py P179   # evidence for a pattern or a transfer
 | `patterns.csv` | Every detected cycle and scatter-gather: accounts in order, entities, time span, source rows | yes |
 | `alerts.csv` | One row per flagged transfer with every signal and its pattern IDs (75 MB) | no, regenerate |
 | `ranked_cases.csv` | The payer-day review queue in ranked order | no, regenerate |
+| `powerbi/*.csv` | Seven small tables for the Power BI report: summary, signals, periods, days, queue depths, top 1,000 cases, patterns | yes |
 
 ---
 
@@ -223,11 +249,13 @@ aml-graph-intelligence/
 ├── analyze.py           # runs everything and writes data/processed/
 ├── investigate.py       # prints the evidence behind a pattern or a transfer
 ├── make_charts.py       # README figures
+├── export_powerbi.py    # small tables for the Power BI report
+├── powerbi/             # AML_Review.pbix and its project source (.pbip)
 ├── tests/
 │   ├── test_signals.py      # hand-built graphs for every signal
 │   └── test_evaluation.py   # metric arithmetic and queue ordering
-├── data/processed/      # committed evaluation results and pattern list
-└── docs/images/         # figures used in this README
+├── data/processed/      # committed evaluation results, pattern list and Power BI tables
+└── docs/images/         # README figures and Power BI screenshots
 ```
 
 ---

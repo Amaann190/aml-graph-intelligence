@@ -1,0 +1,129 @@
+{
+  "$schema": "https://developer.microsoft.com/json-schemas/fabric/item/report/definition/visualContainer/2.14.0/schema.json",
+  "name": "chartQueue",
+  "position": {
+    "x": 324,
+    "y": 12,
+    "z": 2,
+    "height": 232,
+    "width": 944,
+    "tabOrder": 2
+  },
+  "visual": {
+    "visualType": "lineChart",
+    "query": {
+      "queryState": {
+        "Category": {
+          "projections": [
+            {
+              "field": {
+                "Column": {
+                  "Expression": {
+                    "SourceRef": {
+                      "Entity": "QueueDepths"
+                    }
+                  },
+                  "Property": "Cases reviewed"
+                }
+              },
+              "queryRef": "QueueDepths.Cases reviewed",
+              "nativeQueryRef": "Cases reviewed",
+              "active": true
+            }
+          ]
+        },
+        "Series": {
+          "projections": [
+            {
+              "field": {
+                "Column": {
+                  "Expression": {
+                    "SourceRef": {
+                      "Entity": "QueueDepths"
+                    }
+                  },
+                  "Property": "Ranking"
+                }
+              },
+              "queryRef": "QueueDepths.Ranking",
+              "nativeQueryRef": "Ranking"
+            }
+          ]
+        },
+        "Y": {
+          "projections": [
+            {
+              "field": {
+                "Measure": {
+                  "Expression": {
+                    "SourceRef": {
+                      "Entity": "QueueDepths"
+                    }
+                  },
+                  "Property": "Queue precision"
+                }
+              },
+              "queryRef": "QueueDepths.Queue precision",
+              "nativeQueryRef": "Queue precision"
+            }
+          ]
+        }
+      },
+      "sortDefinition": {
+        "sort": [
+          {
+            "field": {
+              "Column": {
+                "Expression": {
+                  "SourceRef": {
+                    "Entity": "QueueDepths"
+                  }
+                },
+                "Property": "Cases reviewed"
+              }
+            },
+            "direction": "Ascending"
+          }
+        ]
+      }
+    },
+    "objects": {
+      "labels": [
+        {
+          "properties": {
+            "show": {
+              "expr": {
+                "Literal": {
+                  "Value": "true"
+                }
+              }
+            }
+          }
+        }
+      ]
+    },
+    "visualContainerObjects": {
+      "title": [
+        {
+          "properties": {
+            "show": {
+              "expr": {
+                "Literal": {
+                  "Value": "true"
+                }
+              }
+            },
+            "text": {
+              "expr": {
+                "Literal": {
+                  "Value": "'Share of reviewed cases that are labelled laundering, by queue depth'"
+                }
+              }
+            }
+          }
+        }
+      ]
+    },
+    "drillFilterOtherVisuals": true
+  }
+}
