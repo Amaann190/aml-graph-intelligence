@@ -1,11 +1,75 @@
 {
-  "first_day": "2022/09/08",
-  "last_day": "2022/09/18",
-  "candidate_cases": 20012,
-  "labelled_cases": 1651,
-  "reviewed": 100,
-  "found": 33,
-  "precision_at_100": 0.33,
-  "recall_at_100": 0.019987886129618413,
-  "candidate_recall": 0.07995154451847365
+  "case": "payer account and calendar day; positive if any outgoing transfer is labelled",
+  "all_days": {
+    "graph_ranking": {
+      "candidate_cases": 63872,
+      "labelled_cases": 3965,
+      "candidate_recall": 0.23203026481715006,
+      "precision_at_25": 0.84,
+      "found_at_25": 21,
+      "precision_at_50": 0.64,
+      "found_at_50": 32,
+      "precision_at_100": 0.57,
+      "found_at_100": 57,
+      "precision_at_250": 0.676,
+      "found_at_250": 169,
+      "precision_at_500": 0.416,
+      "found_at_500": 208,
+      "precision_at_1000": 0.344,
+      "found_at_1000": 344
+    },
+    "daily_rules_ranking": {
+      "candidate_cases": 62808,
+      "labelled_cases": 3965,
+      "candidate_recall": 0.10315258511979823,
+      "precision_at_25": 0.6,
+      "found_at_25": 15,
+      "precision_at_50": 0.3,
+      "found_at_50": 15,
+      "precision_at_100": 0.37,
+      "found_at_100": 37,
+      "precision_at_250": 0.468,
+      "found_at_250": 117,
+      "precision_at_500": 0.236,
+      "found_at_500": 118,
+      "precision_at_1000": 0.124,
+      "found_at_1000": 124
+    }
+  },
+  "2022-09-08_to_2022-09-18": {
+    "graph_ranking": {
+      "candidate_cases": 20394,
+      "labelled_cases": 1651,
+      "candidate_recall": 0.25196850393700787,
+      "precision_at_25": 0.68,
+      "found_at_25": 17,
+      "precision_at_50": 0.78,
+      "found_at_50": 39,
+      "precision_at_100": 0.77,
+      "found_at_100": 77,
+      "precision_at_250": 0.504,
+      "found_at_250": 126,
+      "precision_at_500": 0.604,
+      "found_at_500": 302,
+      "precision_at_1000": 0.331,
+      "found_at_1000": 331
+    },
+    "daily_rules_ranking": {
+      "candidate_cases": 20012,
+      "labelled_cases": 1651,
+      "candidate_recall": 0.07995154451847365,
+      "precision_at_25": 0.36,
+      "found_at_25": 9,
+      "precision_at_50": 0.6,
+      "found_at_50": 30,
+      "precision_at_100": 0.33,
+      "found_at_100": 33,
+      "precision_at_250": 0.14,
+      "found_at_250": 35,
+      "precision_at_500": 0.084,
+      "found_at_500": 42,
+      "precision_at_1000": 0.049,
+      "found_at_1000": 49
+    }
+  }
 }

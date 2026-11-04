@@ -1,67 +1,131 @@
-"""Score daily bank-account graphs and export transaction-level evidence."""
-from collections import Counter
-from pathlib import Path
-from tempfile import TemporaryDirectory
+"""Run every signal over HI-Small, export the evidence and score it against the labels.
+
+Outputs in data/processed/:
+  alerts.csv            one row per flagged transfer, with each signal and its pattern IDs
+  patterns.csv          every detected cycle and scatter-gather, with its transfers
+  ranked_cases.csv      payer-day review queue, graph patterns first
+  evaluation.json       transfer-level precision, recall and lift per signal and period
+  case_evaluation.json  precision@k of the review queue, with and without graph patterns
+"""
 import json
+import time
 
 import pandas as pd
 
-ROOT = Path(__file__).resolve().parent
-RAW = ROOT / "data/raw"
-OUTPUT = ROOT / "data/processed"
-FAN_THRESHOLD = 10
+from aml.data import OUTPUT, entity_name, load_entities, load_transactions
+from aml.evaluation import (SIGNALS, build_cases, labelled_cases, queue_report, rank,
+                            score, signal_report)
+from aml.signals import (MAX_CYCLE_LENGTH, MIN_MIDDLE, daily_signals, flag_patterns,
+                         scatter_gather, temporal_cycles)
+
+PERIODS = {
+    "Sep 1-5": ("2022-09-01", "2022-09-05"),
+    "Sep 6-10": ("2022-09-06", "2022-09-10"),
+    "Sep 11-18 (tail)": ("2022-09-11", "2022-09-18"),
+}
+HOLDOUT = ("2022-09-08", "2022-09-18")      # the period the original queue was reported on
 
 
-def score_day(frame):
-    edges = frame.loc[frame.source != frame.target].copy()
-    outgoing = edges.groupby("source").target.nunique()
-    incoming = edges.groupby("target").source.nunique()
-    edges["out_degree"] = edges.source.map(outgoing)
-    edges["in_degree"] = edges.target.map(incoming)
-    first = edges.groupby(["source", "target"]).time.min()
-    reverse = pd.MultiIndex.from_arrays([edges.target, edges.source])
-    earlier = pd.Series(first.reindex(reverse).to_numpy(), index=edges.index)
-    edges["return_transfer"] = earlier.fillna("9999") < edges.time
-    edges["fan_out"] = edges.out_degree >= FAN_THRESHOLD
-    edges["fan_in"] = edges.in_degree >= FAN_THRESHOLD
-    return edges.loc[edges[["return_transfer", "fan_in", "fan_out"]].any(axis=1)].copy()
+def in_period(frame: pd.DataFrame, period: tuple) -> pd.Series:
+    return frame.day.between(*period)
+
+
+def describe(patterns, accounts, entities, frame) -> pd.DataFrame:
+    labels = frame.set_index("source_row").label
+    records = []
+    for number, pattern in enumerate(patterns, 1):
+        names = [accounts[a] for a in pattern.accounts]
+        records.append({
+            "pattern_id": f"P{number}",
+            "kind": pattern.kind,
+            "accounts": " > ".join(names),
+            "entities": " > ".join(entity_name(entities, n) for n in names),
+            "transfers": len(pattern.rows),
+            "start": pd.Timestamp(pattern.start, unit="m").strftime("%Y-%m-%d %H:%M"),
+            "end": pd.Timestamp(pattern.end, unit="m").strftime("%Y-%m-%d %H:%M"),
+            "hours": round((pattern.end - pattern.start) / 60, 1),
+            "labelled_transfers": int(labels.loc[list(pattern.rows)].sum()),
+            "source_rows": " ".join(map(str, pattern.rows)),
+        })
+    return pd.DataFrame(records)
+
+
+def sensitivity(frame, cycles) -> dict:
+    """How the graph signals respond to their two main settings."""
+    report = {}
+    for length in (4, 6, MAX_CYCLE_LENGTH):
+        kept = [p for p in cycles if len(p.accounts) <= length]
+        report[f"cycle, up to {length} accounts"] = score(flag_patterns(frame, kept).cycle, frame.label)
+    for middle in (2, 3, 4, 5):
+        found = scatter_gather(frame, min_middle=middle)
+        report[f"scatter-gather, {middle}+ intermediaries"] = score(
+            flag_patterns(frame, found).scatter_gather, frame.label)
+    return report
 
 
 def main():
+    started = time.time()
     OUTPUT.mkdir(parents=True, exist_ok=True)
-    accounts = pd.read_csv(RAW / "HI-Small_accounts.csv", dtype=str)
-    entities = dict(zip(accounts["Bank ID"] + "/" + accounts["Account Number"], accounts["Entity Name"]))
-    counts = Counter()
-    columns = ["time", "from_bank", "payer", "to_bank", "payee", "received", "receiving_currency",
-               "paid", "payment_currency", "format", "label"]
-    with TemporaryDirectory(dir=OUTPUT) as temp:
-        staging = Path(temp)
-        for batch, part in enumerate(pd.read_csv(RAW / "HI-Small_Trans.csv", header=0,
-                                                names=columns, dtype=str, chunksize=200000)):
-            part["source_row"] = part.index + 2
-            part["source"] = part.from_bank + "/" + part.payer
-            part["target"] = part.to_bank + "/" + part.payee
-            for day, rows in part.groupby(part.time.str[:10].str.replace("/", "-")):
-                directory = staging / day
-                directory.mkdir(exist_ok=True)
-                rows.to_pickle(directory / f"{batch}.pkl")
-        alerts_file = staging / "alerts.csv"
-        for day in sorted(p for p in staging.iterdir() if p.is_dir()):
-            rows = pd.concat(pd.read_pickle(p) for p in day.glob("*.pkl"))
-            alerts = score_day(rows)
-            alerts["sender_entity"] = alerts.source.map(entities)
-            alerts["receiver_entity"] = alerts.target.map(entities)
-            counts.update(transactions=len(rows), labelled_positive=int((rows.label == "1").sum()),
-                          flagged=len(alerts), true_positive=int((alerts.label == "1").sum()))
-            alerts.to_csv(alerts_file, mode="a", header=not alerts_file.exists(), index=False)
-        counts["false_positive"] = counts["flagged"] - counts["true_positive"]
-        counts["false_negative"] = counts["labelled_positive"] - counts["true_positive"]
-        for metric, denominator in [("precision", "flagged"), ("recall", "labelled_positive")]:
-            counts[metric] = counts["true_positive"] / counts[denominator] if counts[denominator] else None
-        alerts_file.replace(OUTPUT / "alerts.csv")
-    summary = json.dumps(dict(counts), indent=2)
-    (OUTPUT / "evaluation.json").write_text(summary)
-    print(summary)
+    frame, accounts = load_transactions()
+    entities = load_entities()
+    print(f"loaded {len(frame):,} transfers in {time.time() - started:.0f}s")
+
+    signals = daily_signals(frame)
+    cycles = temporal_cycles(frame)
+    gathers = scatter_gather(frame, min_middle=MIN_MIDDLE)
+    patterns = cycles + gathers
+    signals = signals.join(flag_patterns(frame, patterns))
+    print(f"{len(cycles)} cycles, {len(gathers)} scatter-gathers after {time.time() - started:.0f}s")
+
+    flagged = signals[SIGNALS].any(axis=1)
+    alerts = frame.loc[flagged].join(signals.loc[flagged])
+    alerts.insert(1, "payer", accounts[alerts.source.to_numpy()])
+    alerts.insert(2, "payee", accounts[alerts.target.to_numpy()])
+    alerts["payer_entity"] = [entity_name(entities, a) for a in alerts.payer]
+    alerts["payee_entity"] = [entity_name(entities, a) for a in alerts.payee]
+    alerts.drop(columns=["source", "target", "minute", "day"]).to_csv(OUTPUT / "alerts.csv", index=False)
+    describe(patterns, accounts, entities, frame).to_csv(OUTPUT / "patterns.csv", index=False)
+
+    days = frame.groupby("day").label.agg(transfers="size", labelled="sum")
+    evaluation = {
+        "transactions": len(frame),
+        "labelled_positive": int(frame.label.sum()),
+        "base_rate": float(frame.label.mean()),
+        "signals": signal_report(frame, signals),
+        "periods": {name: {"transactions": int(in_period(frame, p).sum()),
+                           "labelled_positive": int(frame.label[in_period(frame, p)].sum()),
+                           "signals": signal_report(frame[in_period(frame, p)], signals[in_period(frame, p)])}
+                    for name, p in PERIODS.items()},
+        "days": {day: {"transfers": int(r.transfers), "labelled": int(r.labelled)} for day, r in days.iterrows()},
+        "sensitivity": sensitivity(frame, cycles),
+    }
+    (OUTPUT / "evaluation.json").write_text(json.dumps(evaluation, indent=2))
+
+    cases = build_cases(frame, signals)
+    positives = labelled_cases(frame)
+    queue = rank(cases)
+    baseline = rank(cases, use_graph=False)
+    late = {(d, s) for d, s in positives if HOLDOUT[0] <= d <= HOLDOUT[1]}
+    case_evaluation = {
+        "case": "payer account and calendar day; positive if any outgoing transfer is labelled",
+        "all_days": {"graph_ranking": queue_report(queue, positives),
+                     "daily_rules_ranking": queue_report(baseline, positives)},
+        f"{HOLDOUT[0]}_to_{HOLDOUT[1]}": {
+            "graph_ranking": queue_report(queue.loc[queue.day.between(*HOLDOUT)], late),
+            "daily_rules_ranking": queue_report(baseline.loc[baseline.day.between(*HOLDOUT)], late)},
+    }
+    (OUTPUT / "case_evaluation.json").write_text(json.dumps(case_evaluation, indent=2))
+
+    queue = queue.assign(payer=accounts[queue.source.to_numpy()],
+                         labelled_case=[(d, s) in positives for d, s in zip(queue.day, queue.source)])
+    queue.drop(columns="source").to_csv(OUTPUT / "ranked_cases.csv", index=False)
+
+    for name, result in evaluation["signals"].items():
+        print(f"{name:18} flagged {result['flagged']:>8,}  precision {result['precision']:7.2%}  "
+              f"recall {result['recall']:6.2%}  lift {result['lift']:7.1f}x")
+    print("queue precision@100:", case_evaluation["all_days"]["graph_ranking"]["precision_at_100"],
+          "vs daily rules only:", case_evaluation["all_days"]["daily_rules_ranking"]["precision_at_100"])
+    print(f"done in {time.time() - started:.0f}s")
 
 
 if __name__ == "__main__":

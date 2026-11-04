@@ -227,3 +227,4 @@ data/processed/
 data/processed/*
 !data/processed/evaluation.json
 !data/processed/case_evaluation.json
+!data/processed/patterns.csv

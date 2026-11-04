@@ -1,10 +1,376 @@
 {
   "transactions": 5078345,
   "labelled_positive": 5177,
-  "flagged": 568058,
-  "true_positive": 952,
-  "false_positive": 567106,
-  "false_negative": 4225,
-  "precision": 0.0016758852089047245,
-  "recall": 0.18389028394823256
+  "base_rate": 0.0010194266045335635,
+  "signals": {
+    "fan_out": {
+      "flagged": 506448,
+      "true_positive": 674,
+      "precision": 0.0013308375193504566,
+      "recall": 0.13019123044234113,
+      "lift": 1.3054765428251487
+    },
+    "fan_in": {
+      "flagged": 61150,
+      "true_positive": 191,
+      "precision": 0.00312346688470973,
+      "recall": 0.03689395402742901,
+      "lift": 3.0639448399905804
+    },
+    "return_transfer": {
+      "flagged": 568,
+      "true_positive": 87,
+      "precision": 0.15316901408450703,
+      "recall": 0.01680509947846243,
+      "lift": 150.25016357562023
+    },
+    "cycle": {
+      "flagged": 541,
+      "true_positive": 162,
+      "precision": 0.29944547134935307,
+      "recall": 0.03129225420127487,
+      "lift": 293.7391176742574
+    },
+    "scatter_gather": {
+      "flagged": 1183,
+      "true_positive": 572,
+      "precision": 0.4835164835164835,
+      "recall": 0.11048870001931621,
+      "lift": 474.3023983935709
+    },
+    "any daily rule": {
+      "flagged": 568058,
+      "true_positive": 952,
+      "precision": 0.0016758852089047245,
+      "recall": 0.18389028394823256,
+      "lift": 1.6439488644418125
+    },
+    "any graph pattern": {
+      "flagged": 1705,
+      "true_positive": 721,
+      "precision": 0.4228739002932551,
+      "recall": 0.13926984740197026,
+      "lift": 414.8154446947558
+    },
+    "any signal": {
+      "flagged": 569442,
+      "true_positive": 1631,
+      "precision": 0.0028642074170854978,
+      "recall": 0.31504732470542784,
+      "lift": 2.809625925346543
+    }
+  },
+  "periods": {
+    "Sep 1-5": {
+      "transactions": 2766832,
+      "labelled_positive": 1999,
+      "signals": {
+        "fan_out": {
+          "flagged": 254369,
+          "true_positive": 348,
+          "precision": 0.0013680912375328754,
+          "recall": 0.17408704352176088,
+          "lift": 1.8935861005130368
+        },
+        "fan_in": {
+          "flagged": 30406,
+          "true_positive": 90,
+          "precision": 0.0029599421166874957,
+          "recall": 0.04502251125562781,
+          "lift": 4.096879723160929
+        },
+        "return_transfer": {
+          "flagged": 293,
+          "true_positive": 42,
+          "precision": 0.14334470989761092,
+          "recall": 0.021010505252626314,
+          "lift": 198.404567471449
+        },
+        "cycle": {
+          "flagged": 233,
+          "true_positive": 39,
+          "precision": 0.16738197424892703,
+          "recall": 0.01950975487743872,
+          "lift": 231.67473865688208
+        },
+        "scatter_gather": {
+          "flagged": 488,
+          "true_positive": 160,
+          "precision": 0.32786885245901637,
+          "recall": 0.080040020010005,
+          "lift": 453.8059193531191
+        },
+        "any daily rule": {
+          "flagged": 284999,
+          "true_positive": 480,
+          "precision": 0.0016842164358471434,
+          "recall": 0.24012006003001501,
+          "lift": 2.331137533580702
+        },
+        "any graph pattern": {
+          "flagged": 719,
+          "true_positive": 197,
+          "precision": 0.27399165507649514,
+          "recall": 0.09854927463731866,
+          "lift": 379.2340565275684
+        },
+        "any signal": {
+          "flagged": 285577,
+          "true_positive": 657,
+          "precision": 0.0023006054409143595,
+          "recall": 0.32866433216608304,
+          "lift": 3.1842865199079333
+        }
+      }
+    },
+    "Sep 6-10": {
+      "transactions": 2310405,
+      "labelled_positive": 2523,
+      "signals": {
+        "fan_out": {
+          "flagged": 252079,
+          "true_positive": 326,
+          "precision": 0.0012932453714906834,
+          "recall": 0.12921125644074513,
+          "lift": 1.1842729181604963
+        },
+        "fan_in": {
+          "flagged": 30744,
+          "true_positive": 101,
+          "precision": 0.0032851938589643507,
+          "recall": 0.04003170828378914,
+          "lift": 3.008374283678371
+        },
+        "return_transfer": {
+          "flagged": 272,
+          "true_positive": 42,
+          "precision": 0.15441176470588236,
+          "recall": 0.016646848989298454,
+          "lift": 141.40059977617682
+        },
+        "cycle": {
+          "flagged": 282,
+          "true_positive": 103,
+          "precision": 0.36524822695035464,
+          "recall": 0.04082441537851764,
+          "lift": 334.4713950801562
+        },
+        "scatter_gather": {
+          "flagged": 552,
+          "true_positive": 292,
+          "precision": 0.5289855072463768,
+          "recall": 0.11573523583036067,
+          "lift": 484.41171655551534
+        },
+        "any daily rule": {
+          "flagged": 283056,
+          "true_positive": 469,
+          "precision": 0.0016569159459612233,
+          "recall": 0.18588981371383273,
+          "lift": 1.5172995981484503
+        },
+        "any graph pattern": {
+          "flagged": 820,
+          "true_positive": 386,
+          "precision": 0.47073170731707314,
+          "recall": 0.15299246928260007,
+          "lift": 431.0665438937385
+        },
+        "any signal": {
+          "flagged": 283696,
+          "true_positive": 833,
+          "precision": 0.002936241610738255,
+          "recall": 0.33016250495441934,
+          "lift": 2.6888257228132058
+        }
+      }
+    },
+    "Sep 11-18 (tail)": {
+      "transactions": 1108,
+      "labelled_positive": 655,
+      "signals": {
+        "fan_out": {
+          "flagged": 0,
+          "true_positive": 0,
+          "precision": 0.0,
+          "recall": 0.0,
+          "lift": 0.0
+        },
+        "fan_in": {
+          "flagged": 0,
+          "true_positive": 0,
+          "precision": 0.0,
+          "recall": 0.0,
+          "lift": 0.0
+        },
+        "return_transfer": {
+          "flagged": 3,
+          "true_positive": 3,
+          "precision": 1.0,
+          "recall": 0.004580152671755725,
+          "lift": 1.6916030534351145
+        },
+        "cycle": {
+          "flagged": 26,
+          "true_positive": 20,
+          "precision": 0.7692307692307693,
+          "recall": 0.030534351145038167,
+          "lift": 1.3012331180270114
+        },
+        "scatter_gather": {
+          "flagged": 143,
+          "true_positive": 120,
+          "precision": 0.8391608391608392,
+          "recall": 0.183206106870229,
+          "lift": 1.4195270378476486
+        },
+        "any daily rule": {
+          "flagged": 3,
+          "true_positive": 3,
+          "precision": 1.0,
+          "recall": 0.004580152671755725,
+          "lift": 1.6916030534351145
+        },
+        "any graph pattern": {
+          "flagged": 166,
+          "true_positive": 138,
+          "precision": 0.8313253012048193,
+          "recall": 0.21068702290076335,
+          "lift": 1.4062724179159387
+        },
+        "any signal": {
+          "flagged": 169,
+          "true_positive": 141,
+          "precision": 0.834319526627219,
+          "recall": 0.2152671755725191,
+          "lift": 1.411337458783143
+        }
+      }
+    }
+  },
+  "days": {
+    "2022-09-01": {
+      "transfers": 1114921,
+      "labelled": 322
+    },
+    "2022-09-02": {
+      "transfers": 754449,
+      "labelled": 408
+    },
+    "2022-09-03": {
+      "transfers": 207382,
+      "labelled": 391
+    },
+    "2022-09-04": {
+      "transfers": 207430,
+      "labelled": 407
+    },
+    "2022-09-05": {
+      "transfers": 482650,
+      "labelled": 471
+    },
+    "2022-09-06": {
+      "transfers": 482089,
+      "labelled": 531
+    },
+    "2022-09-07": {
+      "transfers": 482751,
+      "labelled": 497
+    },
+    "2022-09-08": {
+      "transfers": 482773,
+      "labelled": 539
+    },
+    "2022-09-09": {
+      "transfers": 654467,
+      "labelled": 514
+    },
+    "2022-09-10": {
+      "transfers": 208325,
+      "labelled": 442
+    },
+    "2022-09-11": {
+      "transfers": 396,
+      "labelled": 232
+    },
+    "2022-09-12": {
+      "transfers": 281,
+      "labelled": 170
+    },
+    "2022-09-13": {
+      "transfers": 184,
+      "labelled": 106
+    },
+    "2022-09-14": {
+      "transfers": 121,
+      "labelled": 70
+    },
+    "2022-09-15": {
+      "transfers": 46,
+      "labelled": 28
+    },
+    "2022-09-16": {
+      "transfers": 46,
+      "labelled": 26
+    },
+    "2022-09-17": {
+      "transfers": 23,
+      "labelled": 15
+    },
+    "2022-09-18": {
+      "transfers": 11,
+      "labelled": 8
+    }
+  },
+  "sensitivity": {
+    "cycle, up to 4 accounts": {
+      "flagged": 449,
+      "true_positive": 104,
+      "precision": 0.23162583518930957,
+      "recall": 0.020088854548966584,
+      "lift": 227.21187985405726
+    },
+    "cycle, up to 6 accounts": {
+      "flagged": 495,
+      "true_positive": 124,
+      "precision": 0.2505050505050505,
+      "recall": 0.023952095808383235,
+      "lift": 245.73132522833123
+    },
+    "cycle, up to 8 accounts": {
+      "flagged": 541,
+      "true_positive": 162,
+      "precision": 0.29944547134935307,
+      "recall": 0.03129225420127487,
+      "lift": 293.7391176742574
+    },
+    "scatter-gather, 2+ intermediaries": {
+      "flagged": 97859,
+      "true_positive": 799,
+      "precision": 0.008164808551078593,
+      "recall": 0.1543364883136952,
+      "lift": 8.009216666279162
+    },
+    "scatter-gather, 3+ intermediaries": {
+      "flagged": 1183,
+      "true_positive": 572,
+      "precision": 0.4835164835164835,
+      "recall": 0.11048870001931621,
+      "lift": 474.3023983935709
+    },
+    "scatter-gather, 4+ intermediaries": {
+      "flagged": 662,
+      "true_positive": 522,
+      "precision": 0.7885196374622356,
+      "recall": 0.10083059687077459,
+      "lift": 773.4932892231326
+    },
+    "scatter-gather, 5+ intermediaries": {
+      "flagged": 592,
+      "true_positive": 513,
+      "precision": 0.8665540540540541,
+      "recall": 0.09909213830403708,
+      "lift": 850.0406504993501
+    }
+  }
 }
