@@ -1,3 +1,5 @@
+<picture><source media="(prefers-color-scheme: light)" srcset="docs/images/banner-light.svg"><img src="docs/images/banner.svg" width="100%" alt="AML Graph Intelligence: 415x precision lift over base rate on 5.08M synthetic transfers"></picture>
+
 # AML Graph Intelligence
 
 **Finding money-laundering patterns in 5 million bank transfers by following money between accounts, not just counting transfers per account.**
