@@ -270,3 +270,7 @@ aml-graph-intelligence/
 - **Hubs are blind spots.** Laundering routed through an account with more than 30 counterparties will not appear as a cycle or scatter-gather.
 - **Amounts are not used.** A laundering cycle usually loses a little at each hop (fees, smurfing). Checking that amounts shrink round the loop would cut false positives, and is the obvious next step.
 - **Retrospective.** The queue ranks a whole month at once. It does not simulate a daily review budget or alerts arriving in real time.
+
+## Author
+
+Built by [Amaan Shaikh](https://amaanshaikh.dev), fintech data analyst. More projects and résumé at [amaanshaikh.dev](https://amaanshaikh.dev).
